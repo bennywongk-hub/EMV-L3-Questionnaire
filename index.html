@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>EMV L3 Questionnaire – Import/Export CSV</title>
+    <title>EMV L3 問卷 – 無使用提示</title>
     <style>
         * { box-sizing: border-box; }
         body {
@@ -22,16 +22,14 @@
         h2 { background: #e9ecef; padding: 8px 15px; border-radius: 30px; font-size: 20px; margin-top: 30px; }
         h3 { margin: 20px 0 10px; padding-left: 8px; border-left: 4px solid #0b3b5f; color: #2c5282; }
         table { width: 100%; border-collapse: collapse; margin: 16px 0; }
-        th, td { border: 1px solid #cbd5e0; padding: 10px 12px; vertical-align: top; }
+        th, td { border: 1px solid #cbd5e0; padding: 10px 12px; vertical-align: middle; }
         th { background: #f1f5f9; }
         .check-group { display: flex; flex-wrap: wrap; gap: 20px; margin: 10px 0; }
-        .check-item { display: inline-flex; align-items: center; gap: 6px; background: #f8fafc; padding: 5px 14px; border-radius: 40px; border: 1px solid #cbd5e0; }
+        .check-item { display: inline-flex; align-items: center; gap: 8px; background: #f8fafc; padding: 5px 14px; border-radius: 40px; border: 1px solid #cbd5e0; }
         input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: #0b3b5f; }
         input[type="text"] { width: 100%; padding: 8px 10px; border: 1px solid #cbd5e0; border-radius: 14px; font-family: inherit; }
         .inline-label { display: inline-flex; align-items: center; gap: 6px; margin-right: 20px; }
-        .note { background: #fff8e7; border-left: 5px solid #f5b042; padding: 12px 20px; margin-top: 30px; border-radius: 14px; }
         footer { font-size: 12px; text-align: center; margin-top: 25px; color: #4a627a; }
-        hr { margin: 20px 0; border: none; border-top: 1px dashed #cbd5e0; }
         .button-bar {
             display: flex;
             gap: 15px;
@@ -54,158 +52,143 @@
         .action-btn.csv-import { background: #b45f2b; }
         .action-btn.clear-btn { background: #8b5a2b; }
         .action-btn:hover { opacity: 0.85; }
+        .hint { font-size: 0.85em; color: #5a6e7c; font-weight: normal; }
+        .card-name { font-weight: 600; }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>📋 EMV L3 Terminal Certification – Unified Questionnaire</h1>
-    <p><strong>Instructions:</strong> Fill the form. Use <strong>Export CSV</strong> to save data, or <strong>Import CSV</strong> to load previously exported data.</p>
+    <h1>📋 EMV L3 終端認證問卷 <span style="font-size:0.6em; color:#5a6e7c;">(EMV L3 Terminal Certification)</span></h1>
+    <p><strong>使用說明：</strong> 填寫表單後點擊 <strong>匯出 CSV</strong> 保存資料；點擊 <strong>匯入 CSV</strong> 可還原之前匯出的資料。</p>
 
     <div class="button-bar">
-        <button class="action-btn csv-export" id="exportCsvBtn">📎 Export CSV</button>
-        <button class="action-btn csv-import" id="importCsvBtn">📂 Import CSV</button>
-        <button class="action-btn clear-btn" id="clearBtn">🗑️ Clear Form</button>
+        <button class="action-btn csv-export" id="exportCsvBtn">📎 匯出 CSV (Export)</button>
+        <button class="action-btn csv-import" id="importCsvBtn">📂 匯入 CSV (Import)</button>
+        <button class="action-btn clear-btn" id="clearBtn">🗑️ 清空表單 (Clear)</button>
     </div>
 
-    <!-- ================= 1. GENERAL ================= -->
-    <h2>1. General & EMV Approvals</h2>
+    <!-- ========== 1. 基本資訊 ========== -->
+    <h2>1. 基本資訊與部署設定 <span class="hint">(General Info & Deployment)</span></h2>
     <table>
-        <tr><th style="width:35%">Field</th><th>Value</th></tr>
-        <tr><td>Customer / Project Name</td><td><input type="text" id="custName" placeholder="e.g., TaiShin Bank - Terminal"></td></tr>
-        <tr><td>Contact Person & Email</td><td><input type="text" id="contactEmail" placeholder="name@example.com"></td></tr>
-        <tr><td>Terminal Brand & Model</td><td><input type="text" id="terminalModel" placeholder="CASTLES S1F3F"></td></tr>
-        <tr><td>Payment App Name / Version</td><td><input type="text" id="appVersion" placeholder="ABC"></td></tr>
-        <tr><td>Deployment Country</td><td><input type="text" id="deployCountry" placeholder="Taiwan"></td></tr>
+        <tr><th style="width:35%">欄位 (Field)</th><th>內容 (Value)</th></tr>
+        <tr><td>客戶 / 專案名稱 <span class="hint">(Customer / Project Name)</span></td><td><input type="text" id="custName" placeholder="請輸入英文 (Please enter in English)"></td></tr>
+        <tr><td>聯絡人 & 信箱 <span class="hint">(Contact & Email)</span></td><td><input type="text" id="contactEmail" placeholder="請輸入英文 (Please enter in English)"></td></tr>
+        <tr><td>終端品牌 & 型號 <span class="hint">(Terminal Brand & Model)</span></td><td><input type="text" id="terminalModel" placeholder="請輸入英文 (Please enter in English)"></td></tr>
+        <tr><td>支付應用名稱 / 版本 <span class="hint">(App Name / Version)</span></td><td><input type="text" id="appVersion" placeholder="請輸入英文 (Please enter in English)"></td></tr>
+        <tr><td>部署國家 <span class="hint">(Deployment Country)</span></td><td><input type="text" id="deployCountry" placeholder="請輸入英文 (Please enter in English)"></td></tr>
         <tr>
-            <td>Terminal Type</td>
+            <td>終端類型 <span class="hint">(Terminal Type)</span></td>
             <td><div class="check-group" id="termTypeGroup">
                 <label class="check-item"><input type="checkbox" class="termType" value="POS"> POS</label>
-                <label class="check-item"><input type="checkbox" class="termType" value="Unattended POS"> Unattended POS</label>
-                <label class="check-item"><input type="checkbox" class="termType" value="Transit"> Transit</label>
-                <label class="check-item"><input type="checkbox" class="termType" value="Vending"> Vending</label>
+                <label class="check-item"><input type="checkbox" class="termType" value="Unattended POS"> 無人值守 POS (Unattended)</label>
+                <label class="check-item"><input type="checkbox" class="termType" value="Transit"> 交通 (Transit)</label>
+                <label class="check-item"><input type="checkbox" class="termType" value="Vending"> 自動販賣機 (Vending)</label>
             </div></td>
         </tr>
-        <tr style="background:#f9fafb;"><td colspan="2"><strong>🔹 EMV Level 1 & 2 Approvals (common for all card schemes)</strong></td></tr>
-        <tr><td>EMV L1 Contact LoA number</td><td><input type="text" id="l1Contact" placeholder="e.g., 15731 0717 430 43a 4a"></td></tr>
-        <tr><td>EMV L1 Contactless LoA number</td><td><input type="text" id="l1Contactless" placeholder="e.g., 15703 0617 260 26b FIMT"></td></tr>
-        <tr><td>EMV L2 Contact LoA number</td><td><input type="text" id="l2Contact" placeholder="e.g., 2-05238-2-11C-ICTK-0723-4.4a"></td></tr>
     </table>
 
-    <!-- ================= 2. CARD SCHEMES ================= -->
-    <h2>2. Card Schemes to Certify</h2>
+    <!-- ========== 2. 卡組織 (純文字) ========== -->
+    <h2>2. 需要認證的卡組織 <span class="hint">(Card Schemes to Certify)</span></h2>
     <div class="check-group" id="cardSchemesGroup">
-        <label class="check-item"><input type="checkbox" class="cardScheme" value="VISA"> VISA</label>
-        <label class="check-item"><input type="checkbox" class="cardScheme" value="Mastercard"> Mastercard</label>
-        <label class="check-item"><input type="checkbox" class="cardScheme" value="UPI"> UPI</label>
-        <label class="check-item"><input type="checkbox" class="cardScheme" value="JCB"> JCB</label>
-        <label class="check-item"><input type="checkbox" class="cardScheme" value="Discover"> Discover</label>
-        <label class="check-item"><input type="checkbox" class="cardScheme" value="Amex"> Amex</label>
+        <label class="check-item"><input type="checkbox" class="cardScheme" value="VISA"> <span class="card-name">VISA</span></label>
+        <label class="check-item"><input type="checkbox" class="cardScheme" value="Mastercard"> <span class="card-name">Mastercard</span></label>
+        <label class="check-item"><input type="checkbox" class="cardScheme" value="UPI"> <span class="card-name">UPI</span></label>
+        <label class="check-item"><input type="checkbox" class="cardScheme" value="JCB"> <span class="card-name">JCB</span></label>
+        <label class="check-item"><input type="checkbox" class="cardScheme" value="Discover"> <span class="card-name">Discover</span></label>
+        <label class="check-item"><input type="checkbox" class="cardScheme" value="Amex"> <span class="card-name">Amex</span></label>
     </div>
 
-    <!-- ================= 3. SUPPORTED INTERFACES ================= -->
-    <h2>3. Supported Interfaces / Methods</h2>
+    <!-- ========== 3. 支援介面 ========== -->
+    <h2>3. 支援的交易介面 / 方式 <span class="hint">(Supported Interfaces / Methods)</span></h2>
     <div class="check-group" id="interfacesGroup">
-        <label class="check-item"><input type="checkbox" class="interface" value="Contact (Chip)"> Contact (Chip)</label>
-        <label class="check-item"><input type="checkbox" class="interface" value="Contactless (NFC)"> Contactless (NFC)</label>
-        <label class="check-item"><input type="checkbox" class="interface" value="Fallback (Chip → Magstripe)"> Fallback (Chip → Magstripe)</label>
-        <label class="check-item"><input type="checkbox" class="interface" value="Magnetic Stripe only"> Magnetic Stripe only</label>
-        <label class="check-item"><input type="checkbox" class="interface" value="Manual Key Entry"> Manual Key Entry</label>
+        <label class="check-item"><input type="checkbox" class="interface" value="Contact (Chip)"> 接觸式 (Contact / Chip)</label>
+        <label class="check-item"><input type="checkbox" class="interface" value="Contactless (NFC)"> 非接觸 (Contactless / NFC)</label>
+        <label class="check-item"><input type="checkbox" class="interface" value="Fallback (Chip → Magstripe)"> 降級 (Fallback / Chip→Magstripe)</label>
+        <label class="check-item"><input type="checkbox" class="interface" value="Magnetic Stripe only"> 僅磁條 (Magstripe only)</label>
+        <label class="check-item"><input type="checkbox" class="interface" value="Manual Key Entry"> 手動輸入 (Manual Key Entry)</label>
     </div>
 
-    <!-- ================= 4. COMMON TERMINAL SETTINGS ================= -->
-    <h2>4. Common Terminal Settings</h2>
+    <!-- ========== 4. 通用終端參數 ========== -->
+    <h2>4. 通用終端參數設定 <span class="hint">(Common Terminal Settings)</span></h2>
     <table>
-        <tr><td>Floor Limit (Contact)</td><td><input type="text" id="floorContact" size="15" placeholder="0"></td>
-            <td>Floor Limit (Contactless)</td><td><input type="text" id="floorContactless" size="15" placeholder="0"></td></tr>
-        <tr><td>CVM Required Limit (CL)</td><td><input type="text" id="cvmRequiredLimit" size="15" placeholder="9999999"></td>
-            <td>Transaction Limit (No CVM)</td><td><input type="text" id="transLimitNoCVM" size="15" placeholder="99999999"></td></tr>
-        <tr><td>Online only terminal?</td>
+        <tr><td>接觸式 Floor Limit <span class="hint">(Contact)</span></td><td><input type="text" id="floorContact" size="15" placeholder="e.g., 0"></td>
+            <td>非接觸 Floor Limit <span class="hint">(Contactless)</span></td><td><input type="text" id="floorContactless" size="15" placeholder="e.g., 0"></td></tr>
+        <tr><td>非接觸 CVM Required Limit</td><td><input type="text" id="cvmRequiredLimit" size="15" placeholder="e.g., 9999999"></td>
+            <td>無 CVM 交易上限 <span class="hint">(Transaction Limit No CVM)</span></td><td><input type="text" id="transLimitNoCVM" size="15" placeholder="e.g., 99999999"></td></tr>
+        <tr><td>僅支援線上交易? <span class="hint">(Online only?)</span></td>
             <td><label class="inline-label"><input type="checkbox" id="onlineOnlyYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="onlineOnlyNo"> No</label></td>
-            <td>PIN Entry capability?</td>
+            <td>支援 PIN 輸入? <span class="hint">(PIN Entry?)</span></td>
             <td><label class="inline-label"><input type="checkbox" id="pinEntryYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="pinEntryNo"> No</label></td> </tr>
-        <tr><td>Receipt printer?</td>
+        <tr><td>支援列印收據? <span class="hint">(Receipt printer?)</span></td>
             <td><label class="inline-label"><input type="checkbox" id="receiptYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="receiptNo"> No</label></td>
-            <td>Cash Back / Refund / Pre‑Auth?</td>
+            <td>支援現金返還 / 退款 / 預授權? <span class="hint">(Cashback/Refund/PreAuth?)</span></td>
             <td><label class="inline-label"><input type="checkbox" id="cashbackYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="cashbackNo"> No</label></td> </tr>
     </table>
 
-    <!-- ================= 5. PER SCHEME – CONTACTLESS L3 LOA ================= -->
-    <h2>5. Per‑Scheme Contactless L3 LOA</h2>
-    <h3>🔵 VISA</h3>
-    <tr><td style="width:40%">VISA Contactless L3 LOA reference</td><td><input type="text" id="visaL3" placeholder="e.g., CDCAST0133"></td></tr>
-    <h3>🟠 Mastercard</h3>
-    <tr><td>Mastercard Contactless L3 LOA (C‑2 LoA)</td><td><input type="text" id="mcL3" placeholder="e.g., TLOA-CAST230703-230906(a)"></td></tr>
-    <h3>🟢 JCB</h3>
-    <tr><td>JCB Contactless L3 LOA / TCI reference</td><td><input type="text" id="jcbL3" placeholder="e.g., 22PF15a-169-06"></td></tr>
-    <h3>🔴 Discover</h3>
-    <tr><td>Discover D-PAS Contactless L3 LOA</td><td><input type="text" id="discoverL3" placeholder="e.g., D‑PAS kernel approval #"></td></tr>
-    <h3>🟣 American Express</h3>
-    <tr><td>Amex Expresspay Contactless L3 LOA (Level 2 version)</td><td><input type="text" id="amexL3" placeholder="e.g., 4.0 or higher"></td></tr>
-    <h3>🟡 UPI</h3>
-    <tr><td>UPI Contactless L3 LOA reference</td><td><input type="text" id="upiL3" placeholder="if available"></td></tr>
+    <!-- ========== 5. EMV 認證編號 (純文字卡組織) ========== -->
+    <h2>5. EMV 認證編號 <span class="hint">(EMV Approvals)</span></h2>
 
-    <!-- ================= 6. CVM & ODA SUMMARY ================= -->
-    <h2>6. CVM & ODA Summary (applies to all schemes)</h2>
+    <h3>🔹 通用 Level 1 & 2 <span class="hint">(Common L1 & L2)</span></h3>
     <table>
-        <tr><th>CVM Method</th><th>Contact (Chip)</th><th>Contactless (NFC)</th></tr>
+        <tr><td style="width:40%">EMV L1 接觸式 LoA <span class="hint">(Contact L1 LoA)</span></td><td><input type="text" id="l1Contact" placeholder="請輸入英文 (Please enter in English)"></td></tr>
+        <tr><td>EMV L1 非接觸 LoA <span class="hint">(Contactless L1 LoA)</span></td><td><input type="text" id="l1Contactless" placeholder="請輸入英文 (Please enter in English)"></td></tr>
+        <tr><td>EMV L2 接觸式 LoA <span class="hint">(Contact L2 LoA)</span></td><td><input type="text" id="l2Contact" placeholder="請輸入英文 (Please enter in English)"></td></tr>
+    </table>
+
+    <h3>🔹 各卡組織 非接觸 L3 <span class="hint">(Per-Scheme Contactless L3 LOA)</span></h3>
+    <table>
+        <tr><td style="width:40%"><span class="card-name">VISA</span> 非接觸 L3 LOA</td><td><input type="text" id="visaL3" placeholder="請輸入英文 (Please enter in English)"></td></tr>
+        <tr><td><span class="card-name">Mastercard</span> 非接觸 L3 LOA (C‑2 LoA)</td><td><input type="text" id="mcL3" placeholder="請輸入英文 (Please enter in English)"></td></tr>
+        <tr><td><span class="card-name">JCB</span> 非接觸 L3 LOA / TCI 編號</td><td><input type="text" id="jcbL3" placeholder="請輸入英文 (Please enter in English)"></td></tr>
+        <tr><td><span class="card-name">Discover</span> D-PAS 非接觸 L3 LOA</td><td><input type="text" id="discoverL3" placeholder="請輸入英文 (Please enter in English)"></td></tr>
+        <tr><td><span class="card-name">Amex</span> Expresspay 非接觸 L3 LOA (Level 2 版本)</td><td><input type="text" id="amexL3" placeholder="請輸入英文 (Please enter in English)"></td></tr>
+        <tr><td><span class="card-name">UPI</span> 非接觸 L3 LOA</td><td><input type="text" id="upiL3" placeholder="請輸入英文 (Please enter in English)"></td></tr>
+    </table>
+
+    <!-- ========== 6. CVM & ODA 匯總 ========== -->
+    <h2>6. CVM & ODA 匯總 <span class="hint">(CVM & ODA Summary – applies to all schemes)</span></h2>
+    <table>
+        <tr><th>CVM 方式 (Method)</th><th>接觸式 (Contact)</th><th>非接觸 (Contactless)</th></tr>
         <tr><td>Online PIN</td>
             <td><label class="inline-label"><input type="checkbox" id="onlinePinContactYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="onlinePinContactNo"> No</label></td>
             <td><label class="inline-label"><input type="checkbox" id="onlinePinCLessYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="onlinePinCLessNo"> No</label></td> </tr>
-        <tr><td>Signature</td>
+        <tr><td>簽名 (Signature)</td>
             <td><label class="inline-label"><input type="checkbox" id="sigContactYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="sigContactNo"> No</label></td>
             <td><label class="inline-label"><input type="checkbox" id="sigCLessYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="sigCLessNo"> No</label></td> </tr>
         <tr><td>No CVM</td>
             <td><label class="inline-label"><input type="checkbox" id="noCvmContactYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="noCvmContactNo"> No</label></td>
             <td><label class="inline-label"><input type="checkbox" id="noCvmCLessYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="noCvmCLessNo"> No</label></td> </tr>
-        <tr><td>CDCVM</td>
+        <tr><td>CDCVM (設備驗證)</td>
             <td><label class="inline-label"><input type="checkbox" id="cdcvmContactYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="cdcvmContactNo"> No</label></td>
             <td><label class="inline-label"><input type="checkbox" id="cdcvmCLessYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="cdcvmCLessNo"> No</label></td> </tr>
     </table>
-    <p><strong>Offline Data Authentication (ODA):</strong>
+    <p><strong>離線資料認證 (ODA) 支援：</strong>
         <label class="inline-label"><input type="checkbox" id="odaSda"> SDA</label>
         <label class="inline-label"><input type="checkbox" id="odaDda"> DDA</label>
         <label class="inline-label"><input type="checkbox" id="odaCda"> CDA</label>
-        (if CDA: <label class="inline-label"><input type="checkbox" id="cdaMode1"> Mode1</label> <label class="inline-label"><input type="checkbox" id="cdaMode2"> Mode2</label>)
+        <span class="hint">(如支援 CDA：</span><label class="inline-label"><input type="checkbox" id="cdaMode1"> Mode 1</label> <label class="inline-label"><input type="checkbox" id="cdaMode2"> Mode 2</label><span class="hint">)</span>
     </p>
 
-    <!-- ================= 7. DECLARATION ================= -->
-    <h2>7. Declaration</h2>
-    <tr>
-        <td>Name</td><td><input type="text" id="declName" placeholder="Full name"></td> </tr>
-    <tr><td>Title</td><td><input type="text" id="declTitle" placeholder="Role"></td> </tr>
-    <tr><td>Date</td><td><input type="text" id="declDate" placeholder="YYYY-MM-DD"></td> </tr>
-    <tr><td>Signature</td><td><input type="text" id="declSignature" placeholder="Electronic or printed name"></td> </tr>
-    </table>
-
-    <div class="note">
-        ✅ <strong>Usage:</strong><br>
-        • <strong>Export CSV</strong> – downloads a CSV file with all field names and current values.<br>
-        • <strong>Import CSV</strong> – select a previously exported CSV file to restore the form data.<br>
-        • <strong>Clear Form</strong> – resets all inputs and checkboxes.
-    </div>
-    <footer>EMV L3 Certification – Import/Export CSV only (no localStorage).</footer>
+    <footer>EMV L3 認證問卷 – 純文字卡組織版本</footer>
 </div>
 
 <script>
     (function() {
-        // ---------- Helper: collect all data into a flat object ----------
+        // ---------- 收集表單資料 ----------
         function getFormData() {
             let data = {};
 
-            // text inputs by id
             const textIds = [
                 'custName', 'contactEmail', 'terminalModel', 'appVersion', 'deployCountry',
                 'l1Contact', 'l1Contactless', 'l2Contact',
                 'floorContact', 'floorContactless', 'cvmRequiredLimit', 'transLimitNoCVM',
-                'visaL3', 'mcL3', 'jcbL3', 'discoverL3', 'amexL3', 'upiL3',
-                'declName', 'declTitle', 'declDate', 'declSignature'
+                'visaL3', 'mcL3', 'jcbL3', 'discoverL3', 'amexL3', 'upiL3'
             ];
             textIds.forEach(id => {
                 let el = document.getElementById(id);
                 if (el) data[id] = el.value;
             });
 
-            // checkboxes (by id)
             const checkIds = [
                 'onlineOnlyYes', 'onlineOnlyNo',
                 'pinEntryYes', 'pinEntryNo',
@@ -226,7 +209,6 @@
                 if (el) data[id] = el.checked;
             });
 
-            // groups (multiple selection)
             data.termType = [];
             document.querySelectorAll('#termTypeGroup .termType').forEach(cb => { if (cb.checked) data.termType.push(cb.value); });
             data.cardSchemes = [];
@@ -237,7 +219,7 @@
             return data;
         }
 
-        // ---------- Set form data from object ----------
+        // ---------- 填入表單資料 ----------
         function setFormData(data) {
             if (!data) return;
             for (let [key, value] of Object.entries(data)) {
@@ -257,32 +239,44 @@
             }
         }
 
-        // ---------- Clear all ----------
+        // ---------- 清空 ----------
         function clearForm() {
             document.querySelectorAll('input[type="text"]').forEach(input => input.value = '');
             document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-            alert('Form cleared.');
+            alert('表單已清空 (Form cleared)');
         }
 
-        // ---------- Export to CSV ----------
+        // ---------- 匯出 CSV ----------
         function exportToCSV() {
             const data = getFormData();
+
+            const fieldLabels = {
+                'custName': 'Customer/Project Name',
+                'contactEmail': 'Contact Person & Email',
+                'terminalModel': 'Terminal Brand & Model',
+                'appVersion': 'Payment App Name/Version',
+                'deployCountry': 'Deployment Country',
+                'l1Contact': 'EMV L1 Contact LoA',
+                'l1Contactless': 'EMV L1 Contactless LoA',
+                'l2Contact': 'EMV L2 Contact LoA',
+                'floorContact': 'Floor Limit (Contact)',
+                'floorContactless': 'Floor Limit (Contactless)',
+                'cvmRequiredLimit': 'CVM Required Limit (CL)',
+                'transLimitNoCVM': 'Transaction Limit (No CVM)',
+                'visaL3': 'VISA Contactless L3 LOA',
+                'mcL3': 'Mastercard Contactless L3 LOA',
+                'jcbL3': 'JCB Contactless L3 LOA',
+                'discoverL3': 'Discover Contactless L3 LOA',
+                'amexL3': 'Amex Contactless L3 LOA',
+                'upiL3': 'UPI Contactless L3 LOA'
+            };
+
             let rows = [];
 
-            // text fields
-            const textIds = [
-                'custName', 'contactEmail', 'terminalModel', 'appVersion', 'deployCountry',
-                'l1Contact', 'l1Contactless', 'l2Contact',
-                'floorContact', 'floorContactless', 'cvmRequiredLimit', 'transLimitNoCVM',
-                'visaL3', 'mcL3', 'jcbL3', 'discoverL3', 'amexL3', 'upiL3',
-                'declName', 'declTitle', 'declDate', 'declSignature'
-            ];
-            textIds.forEach(id => {
-                let label = id.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+            for (let [id, label] of Object.entries(fieldLabels)) {
                 rows.push({ Field: label, Value: data[id] || '' });
-            });
+            }
 
-            // Yes/No pairs
             const checkPairs = [
                 { yes: 'onlineOnlyYes', no: 'onlineOnlyNo', label: 'Online only terminal' },
                 { yes: 'pinEntryYes', no: 'pinEntryNo', label: 'PIN Entry capability' },
@@ -308,7 +302,6 @@
                 rows.push({ Field: pair.label, Value: value });
             });
 
-            // standalone checkboxes
             const standalone = [
                 { id: 'odaSda', label: 'ODA SDA' },
                 { id: 'odaDda', label: 'ODA DDA' },
@@ -320,19 +313,18 @@
                 rows.push({ Field: item.label, Value: data[item.id] ? 'Checked' : 'Unchecked' });
             });
 
-            // groups
-            rows.push({ Field: 'Terminal Type', Value: (data.termType || []).join(', ') });
-            rows.push({ Field: 'Card Schemes Selected', Value: (data.cardSchemes || []).join(', ') });
-            rows.push({ Field: 'Supported Interfaces', Value: (data.interfaces || []).join(', ') });
+            rows.push({ Field: 'Terminal Type', Value: (data.termType || []).join('; ') });
+            rows.push({ Field: 'Card Schemes Selected', Value: (data.cardSchemes || []).join('; ') });
+            rows.push({ Field: 'Supported Interfaces', Value: (data.interfaces || []).join('; ') });
 
             let csvContent = "Field,Value\n";
             rows.forEach(row => {
-                let field = row.Field.replace(/,/g, ';');
-                let value = (row.Value || '').replace(/,/g, ';');
+                let field = row.Field.replace(/"/g, '""');
+                let value = (row.Value || '').replace(/"/g, '""');
                 csvContent += `"${field}","${value}"\n`;
             });
 
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             const url = URL.createObjectURL(blob);
             link.href = url;
@@ -343,73 +335,86 @@
             URL.revokeObjectURL(url);
         }
 
-        // ---------- Import from CSV ----------
+        // ---------- 匯入 CSV (支援有/無引號格式) ----------
         function importFromCSV(file) {
             const reader = new FileReader();
             reader.onload = function(e) {
                 const content = e.target.result;
                 const lines = content.split(/\r?\n/);
                 if (lines.length < 2) {
-                    alert("Invalid CSV file.");
+                    alert("無效的 CSV 檔案 (Invalid CSV file)");
                     return;
                 }
-                // Assume first line is header: Field,Value
+
                 const dataMap = new Map();
                 for (let i = 1; i < lines.length; i++) {
                     let line = lines[i].trim();
                     if (line === "") continue;
-                    // Simple CSV parsing: "field","value"
+
+                    let field = '', value = '';
                     let match = line.match(/^"([^"]*)","(.*)"$/);
-                    if (!match) continue;
-                    let field = match[1];
-                    let value = match[2];
+                    if (match) {
+                        field = match[1];
+                        value = match[2];
+                    } else {
+                        let idx = line.indexOf(',');
+                        if (idx === -1) continue;
+                        field = line.substring(0, idx).trim();
+                        value = line.substring(idx + 1).trim();
+                    }
                     dataMap.set(field, value);
                 }
 
-                // Map field names to element ids or checkbox groups
-                // We'll reconstruct the form data object
+                const fieldToId = {
+                    'Customer/Project Name': 'custName',
+                    'Contact Person & Email': 'contactEmail',
+                    'Terminal Brand & Model': 'terminalModel',
+                    'Payment App Name/Version': 'appVersion',
+                    'Deployment Country': 'deployCountry',
+                    'EMV L1 Contact LoA': 'l1Contact',
+                    'EMV L1 Contactless LoA': 'l1Contactless',
+                    'EMV L2 Contact LoA': 'l2Contact',
+                    'Floor Limit (Contact)': 'floorContact',
+                    'Floor Limit (Contactless)': 'floorContactless',
+                    'CVM Required Limit (CL)': 'cvmRequiredLimit',
+                    'Transaction Limit (No CVM)': 'transLimitNoCVM',
+                    'Trans Limit No C V M': 'transLimitNoCVM',
+                    'VISA Contactless L3 LOA': 'visaL3',
+                    'Mastercard Contactless L3 LOA': 'mcL3',
+                    'JCB Contactless L3 LOA': 'jcbL3',
+                    'Discover Contactless L3 LOA': 'discoverL3',
+                    'Amex Contactless L3 LOA': 'amexL3',
+                    'UPI Contactless L3 LOA': 'upiL3'
+                };
+
                 let newData = {};
 
-                // text fields mapping (id -> CSV label)
-                const textMap = {
-                    'custName': 'Cust Name', 'contactEmail': 'Contact Person & Email', 'terminalModel': 'Terminal Brand & Model',
-                    'appVersion': 'Payment App Name / Version', 'deployCountry': 'Deployment Country',
-                    'l1Contact': 'Emv L1 Contact Loa Number', 'l1Contactless': 'Emv L1 Contactless Loa Number', 'l2Contact': 'Emv L2 Contact Loa Number',
-                    'floorContact': 'Floor Limit (Contact)', 'floorContactless': 'Floor Limit (Contactless)',
-                    'cvmRequiredLimit': 'Cvm Required Limit (Cl)', 'transLimitNoCVM': 'Transaction Limit (No Cvm)',
-                    'visaL3': 'Visa Contactless L3 Loa Reference', 'mcL3': 'Mastercard Contactless L3 Loa (C‑2 Loa)',
-                    'jcbL3': 'Jcb Contactless L3 Loa / Tci Reference', 'discoverL3': 'Discover D-Pas Contactless L3 Loa',
-                    'amexL3': 'Amex Expresspay Contactless L3 Loa (Level 2 Version)', 'upiL3': 'Upi Contactless L3 Loa Reference',
-                    'declName': 'Name', 'declTitle': 'Title', 'declDate': 'Date', 'declSignature': 'Signature'
-                };
-                for (let [id, label] of Object.entries(textMap)) {
-                    let val = dataMap.get(label);
+                for (let [fieldLabel, id] of Object.entries(fieldToId)) {
+                    let val = dataMap.get(fieldLabel);
                     if (val !== undefined) newData[id] = val;
                 }
 
-                // Yes/No pairs
                 const pairMap = {
-                    'onlineOnly': 'Online only terminal',
-                    'pinEntry': 'PIN Entry capability',
-                    'receipt': 'Receipt printer',
-                    'cashback': 'Cash Back / Refund / Pre-Auth',
-                    'onlinePinContact': 'Online PIN (Contact)',
-                    'onlinePinCLess': 'Online PIN (Contactless)',
-                    'sigContact': 'Signature (Contact)',
-                    'sigCLess': 'Signature (Contactless)',
-                    'noCvmContact': 'No CVM (Contact)',
-                    'noCvmCLess': 'No CVM (Contactless)',
-                    'cdcvmContact': 'CDCVM (Contact)',
-                    'cdcvmCLess': 'CDCVM (Contactless)'
+                    'Online only terminal': 'onlineOnly',
+                    'PIN Entry capability': 'pinEntry',
+                    'Receipt printer': 'receipt',
+                    'Cash Back / Refund / Pre-Auth': 'cashback',
+                    'Online PIN (Contact)': 'onlinePinContact',
+                    'Online PIN (Contactless)': 'onlinePinCLess',
+                    'Signature (Contact)': 'sigContact',
+                    'Signature (Contactless)': 'sigCLess',
+                    'No CVM (Contact)': 'noCvmContact',
+                    'No CVM (Contactless)': 'noCvmCLess',
+                    'CDCVM (Contact)': 'cdcvmContact',
+                    'CDCVM (Contactless)': 'cdcvmCLess'
                 };
-                for (let [prefix, label] of Object.entries(pairMap)) {
+                for (let [label, prefix] of Object.entries(pairMap)) {
                     let val = dataMap.get(label);
                     if (val === 'Yes') { newData[prefix + 'Yes'] = true; newData[prefix + 'No'] = false; }
                     else if (val === 'No') { newData[prefix + 'Yes'] = false; newData[prefix + 'No'] = true; }
                     else { newData[prefix + 'Yes'] = false; newData[prefix + 'No'] = false; }
                 }
 
-                // standalone checkboxes
                 const standaloneMap = {
                     'ODA SDA': 'odaSda',
                     'ODA DDA': 'odaDda',
@@ -422,22 +427,20 @@
                     newData[id] = (val === 'Checked');
                 }
 
-                // groups (comma-separated values)
                 let termTypeStr = dataMap.get('Terminal Type') || '';
-                newData.termType = termTypeStr.split(',').map(s => s.trim()).filter(s => s);
+                newData.termType = termTypeStr.split(/[;,]\s*/).filter(s => s);
                 let cardStr = dataMap.get('Card Schemes Selected') || '';
-                newData.cardSchemes = cardStr.split(',').map(s => s.trim()).filter(s => s);
+                newData.cardSchemes = cardStr.split(/[;,]\s*/).filter(s => s);
                 let ifaceStr = dataMap.get('Supported Interfaces') || '';
-                newData.interfaces = ifaceStr.split(',').map(s => s.trim()).filter(s => s);
+                newData.interfaces = ifaceStr.split(/[;,]\s*/).filter(s => s);
 
                 setFormData(newData);
-                alert("CSV imported successfully.");
+                alert("CSV 匯入成功！(CSV imported successfully)");
             };
-            reader.onerror = function() { alert("Error reading file."); };
+            reader.onerror = function() { alert("讀取檔案失敗 (Error reading file)"); };
             reader.readAsText(file, "UTF-8");
         }
 
-        // trigger file picker for import
         function onImportClick() {
             const input = document.createElement('input');
             input.type = 'file';
@@ -450,7 +453,6 @@
             input.click();
         }
 
-        // attach buttons
         document.getElementById('exportCsvBtn').addEventListener('click', exportToCSV);
         document.getElementById('importCsvBtn').addEventListener('click', onImportClick);
         document.getElementById('clearBtn').addEventListener('click', clearForm);

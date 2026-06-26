@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>EMV L3 問卷 – 無使用提示</title>
+    <title>EMV L3 Questionnaire – All Logos 25px</title>
     <style>
         * { box-sizing: border-box; }
         body {
@@ -53,128 +53,159 @@
         .action-btn.clear-btn { background: #8b5a2b; }
         .action-btn:hover { opacity: 0.85; }
         .hint { font-size: 0.85em; color: #5a6e7c; font-weight: normal; }
-        .card-name { font-weight: 600; }
+
+        /* Force all logos to exactly 25px height */
+        .logo-25 {
+            height: 25px !important;
+            width: auto !important;
+            max-width: 80px;
+            object-fit: contain;
+            vertical-align: middle;
+        }
+        .logo-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>📋 EMV L3 終端認證問卷 <span style="font-size:0.6em; color:#5a6e7c;">(EMV L3 Terminal Certification)</span></h1>
-    <p><strong>使用說明：</strong> 填寫表單後點擊 <strong>匯出 CSV</strong> 保存資料；點擊 <strong>匯入 CSV</strong> 可還原之前匯出的資料。</p>
+    <h1>📋 EMV L3 Terminal Certification Questionnaire <span style="font-size:0.6em; color:#5a6e7c;">(EMV L3 終端認證問卷)</span></h1>
+    <p><strong>Instructions:</strong> Fill out the form. Click <strong>Export CSV</strong> to save data; click <strong>Import CSV</strong> to restore previously exported data.</p>
 
     <div class="button-bar">
-        <button class="action-btn csv-export" id="exportCsvBtn">📎 匯出 CSV (Export)</button>
-        <button class="action-btn csv-import" id="importCsvBtn">📂 匯入 CSV (Import)</button>
-        <button class="action-btn clear-btn" id="clearBtn">🗑️ 清空表單 (Clear)</button>
+        <button class="action-btn csv-export" id="exportCsvBtn">📎 Export CSV</button>
+        <button class="action-btn csv-import" id="importCsvBtn">📂 Import CSV</button>
+        <button class="action-btn clear-btn" id="clearBtn">🗑️ Clear Form</button>
     </div>
 
-    <!-- ========== 1. 基本資訊 ========== -->
-    <h2>1. 基本資訊與部署設定 <span class="hint">(General Info & Deployment)</span></h2>
+    <!-- ========== 1. General Info ========== -->
+    <h2>1. General Info & Deployment <span class="hint">(基本資訊與部署設定)</span></h2>
     <table>
-        <tr><th style="width:35%">欄位 (Field)</th><th>內容 (Value)</th></tr>
-        <tr><td>客戶 / 專案名稱 <span class="hint">(Customer / Project Name)</span></td><td><input type="text" id="custName" placeholder="請輸入英文 (Please enter in English)"></td></tr>
-        <tr><td>聯絡人 & 信箱 <span class="hint">(Contact & Email)</span></td><td><input type="text" id="contactEmail" placeholder="請輸入英文 (Please enter in English)"></td></tr>
-        <tr><td>終端品牌 & 型號 <span class="hint">(Terminal Brand & Model)</span></td><td><input type="text" id="terminalModel" placeholder="請輸入英文 (Please enter in English)"></td></tr>
-        <tr><td>支付應用名稱 / 版本 <span class="hint">(App Name / Version)</span></td><td><input type="text" id="appVersion" placeholder="請輸入英文 (Please enter in English)"></td></tr>
-        <tr><td>部署國家 <span class="hint">(Deployment Country)</span></td><td><input type="text" id="deployCountry" placeholder="請輸入英文 (Please enter in English)"></td></tr>
+        <tr><th style="width:35%">Field</th><th>Value</th></tr>
+        <tr><td>Customer / Project Name</td><td><input type="text" id="custName" placeholder="Please enter in English"></td></tr>
+        <tr><td>Contact Person & Email</td><td><input type="text" id="contactEmail" placeholder="Please enter in English"></td></tr>
+        <tr><td>Terminal Brand & Model</td><td><input type="text" id="terminalModel" placeholder="Please enter in English"></td></tr>
+        <tr><td>Payment App Name / Version</td><td><input type="text" id="appVersion" placeholder="Please enter in English"></td></tr>
+        <tr><td>Deployment Country</td><td><input type="text" id="deployCountry" placeholder="Please enter in English"></td></tr>
         <tr>
-            <td>終端類型 <span class="hint">(Terminal Type)</span></td>
+            <td>Terminal Type</td>
             <td><div class="check-group" id="termTypeGroup">
                 <label class="check-item"><input type="checkbox" class="termType" value="POS"> POS</label>
-                <label class="check-item"><input type="checkbox" class="termType" value="Unattended POS"> 無人值守 POS (Unattended)</label>
-                <label class="check-item"><input type="checkbox" class="termType" value="Transit"> 交通 (Transit)</label>
-                <label class="check-item"><input type="checkbox" class="termType" value="Vending"> 自動販賣機 (Vending)</label>
+                <label class="check-item"><input type="checkbox" class="termType" value="Unattended POS"> Unattended POS</label>
+                <label class="check-item"><input type="checkbox" class="termType" value="Transit"> Transit</label>
+                <label class="check-item"><input type="checkbox" class="termType" value="Vending"> Vending</label>
             </div></td>
         </tr>
     </table>
 
-    <!-- ========== 2. 卡組織 (純文字) ========== -->
-    <h2>2. 需要認證的卡組織 <span class="hint">(Card Schemes to Certify)</span></h2>
+    <!-- ========== 2. Card Schemes (All Logos 25px) ========== -->
+    <h2>2. Card Schemes to Certify <span class="hint">(需要認證的卡組織)</span></h2>
     <div class="check-group" id="cardSchemesGroup">
-        <label class="check-item"><input type="checkbox" class="cardScheme" value="VISA"> <span class="card-name">VISA</span></label>
-        <label class="check-item"><input type="checkbox" class="cardScheme" value="Mastercard"> <span class="card-name">Mastercard</span></label>
-        <label class="check-item"><input type="checkbox" class="cardScheme" value="UPI"> <span class="card-name">UPI</span></label>
-        <label class="check-item"><input type="checkbox" class="cardScheme" value="JCB"> <span class="card-name">JCB</span></label>
-        <label class="check-item"><input type="checkbox" class="cardScheme" value="Discover"> <span class="card-name">Discover</span></label>
-        <label class="check-item"><input type="checkbox" class="cardScheme" value="Amex"> <span class="card-name">Amex</span></label>
+        <label class="check-item">
+            <input type="checkbox" class="cardScheme" value="VISA">
+            <img src="images/Visa.png" alt="VISA" height="25" style="height:25px; width:auto;" onerror="this.style.display='none'">
+        </label>
+        <label class="check-item">
+            <input type="checkbox" class="cardScheme" value="Mastercard">
+            <img src="images/Mastercard.png" alt="Mastercard" height="25" style="height:25px; width:auto;" onerror="this.style.display='none'">
+        </label>
+        <label class="check-item">
+            <input type="checkbox" class="cardScheme" value="UPI">
+            <img src="images/UPI.png" alt="UPI" height="25" style="height:25px; width:auto;" onerror="this.style.display='none'">
+        </label>
+        <label class="check-item">
+            <input type="checkbox" class="cardScheme" value="JCB">
+            <img src="images/JCB.png" alt="JCB" height="25" style="height:25px; width:auto;" onerror="this.style.display='none'">
+        </label>
+        <label class="check-item">
+            <input type="checkbox" class="cardScheme" value="Discover">
+            <img src="images/Discover.png" alt="Discover" height="25" style="height:25px; width:auto;" onerror="this.style.display='none'">
+        </label>
+        <label class="check-item">
+            <input type="checkbox" class="cardScheme" value="Amex">
+            <img src="images/Amex.png" alt="Amex" height="25" style="height:25px; width:auto;" onerror="this.style.display='none'">
+        </label>
     </div>
 
-    <!-- ========== 3. 支援介面 ========== -->
-    <h2>3. 支援的交易介面 / 方式 <span class="hint">(Supported Interfaces / Methods)</span></h2>
+    <!-- ========== 3. Supported Interfaces ========== -->
+    <h2>3. Supported Interfaces / Methods <span class="hint">(支援的交易介面)</span></h2>
     <div class="check-group" id="interfacesGroup">
-        <label class="check-item"><input type="checkbox" class="interface" value="Contact (Chip)"> 接觸式 (Contact / Chip)</label>
-        <label class="check-item"><input type="checkbox" class="interface" value="Contactless (NFC)"> 非接觸 (Contactless / NFC)</label>
-        <label class="check-item"><input type="checkbox" class="interface" value="Fallback (Chip → Magstripe)"> 降級 (Fallback / Chip→Magstripe)</label>
-        <label class="check-item"><input type="checkbox" class="interface" value="Magnetic Stripe only"> 僅磁條 (Magstripe only)</label>
-        <label class="check-item"><input type="checkbox" class="interface" value="Manual Key Entry"> 手動輸入 (Manual Key Entry)</label>
+        <label class="check-item"><input type="checkbox" class="interface" value="Contact (Chip)"> Contact (Chip)</label>
+        <label class="check-item"><input type="checkbox" class="interface" value="Contactless (NFC)"> Contactless (NFC)</label>
+        <label class="check-item"><input type="checkbox" class="interface" value="Fallback (Chip → Magstripe)"> Fallback (Chip → Magstripe)</label>
+        <label class="check-item"><input type="checkbox" class="interface" value="Magnetic Stripe only"> Magnetic Stripe only</label>
+        <label class="check-item"><input type="checkbox" class="interface" value="Manual Key Entry"> Manual Key Entry</label>
     </div>
 
-    <!-- ========== 4. 通用終端參數 ========== -->
-    <h2>4. 通用終端參數設定 <span class="hint">(Common Terminal Settings)</span></h2>
+    <!-- ========== 4. Common Terminal Settings ========== -->
+    <h2>4. Common Terminal Settings <span class="hint">(通用終端參數設定)</span></h2>
     <table>
-        <tr><td>接觸式 Floor Limit <span class="hint">(Contact)</span></td><td><input type="text" id="floorContact" size="15" placeholder="e.g., 0"></td>
-            <td>非接觸 Floor Limit <span class="hint">(Contactless)</span></td><td><input type="text" id="floorContactless" size="15" placeholder="e.g., 0"></td></tr>
-        <tr><td>非接觸 CVM Required Limit</td><td><input type="text" id="cvmRequiredLimit" size="15" placeholder="e.g., 9999999"></td>
-            <td>無 CVM 交易上限 <span class="hint">(Transaction Limit No CVM)</span></td><td><input type="text" id="transLimitNoCVM" size="15" placeholder="e.g., 99999999"></td></tr>
-        <tr><td>僅支援線上交易? <span class="hint">(Online only?)</span></td>
+        <tr><td>Floor Limit (Contact)</td><td><input type="text" id="floorContact" size="15" placeholder="e.g., 0"></td>
+            <td>Floor Limit (Contactless)</td><td><input type="text" id="floorContactless" size="15" placeholder="e.g., 0"></td></tr>
+        <tr><td>CVM Required Limit (CL)</td><td><input type="text" id="cvmRequiredLimit" size="15" placeholder="e.g., 9999999"></td>
+            <td>Transaction Limit (No CVM)</td><td><input type="text" id="transLimitNoCVM" size="15" placeholder="e.g., 99999999"></td></tr>
+        <tr><td>Online only terminal?</td>
             <td><label class="inline-label"><input type="checkbox" id="onlineOnlyYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="onlineOnlyNo"> No</label></td>
-            <td>支援 PIN 輸入? <span class="hint">(PIN Entry?)</span></td>
+            <td>PIN Entry capability?</td>
             <td><label class="inline-label"><input type="checkbox" id="pinEntryYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="pinEntryNo"> No</label></td> </tr>
-        <tr><td>支援列印收據? <span class="hint">(Receipt printer?)</span></td>
+        <tr><td>Receipt printer?</td>
             <td><label class="inline-label"><input type="checkbox" id="receiptYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="receiptNo"> No</label></td>
-            <td>支援現金返還 / 退款 / 預授權? <span class="hint">(Cashback/Refund/PreAuth?)</span></td>
+            <td>Cash Back / Refund / Pre-Auth?</td>
             <td><label class="inline-label"><input type="checkbox" id="cashbackYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="cashbackNo"> No</label></td> </tr>
     </table>
 
-    <!-- ========== 5. EMV 認證編號 (純文字卡組織) ========== -->
-    <h2>5. EMV 認證編號 <span class="hint">(EMV Approvals)</span></h2>
+    <!-- ========== 5. EMV Approvals (All Logos 25px) ========== -->
+    <h2>5. EMV Approvals <span class="hint">(EMV 認證編號)</span></h2>
 
-    <h3>🔹 通用 Level 1 & 2 <span class="hint">(Common L1 & L2)</span></h3>
+    <h3>🔹 Common Level 1 & 2 <span class="hint">(通用 Level 1 & 2)</span></h3>
     <table>
-        <tr><td style="width:40%">EMV L1 接觸式 LoA <span class="hint">(Contact L1 LoA)</span></td><td><input type="text" id="l1Contact" placeholder="請輸入英文 (Please enter in English)"></td></tr>
-        <tr><td>EMV L1 非接觸 LoA <span class="hint">(Contactless L1 LoA)</span></td><td><input type="text" id="l1Contactless" placeholder="請輸入英文 (Please enter in English)"></td></tr>
-        <tr><td>EMV L2 接觸式 LoA <span class="hint">(Contact L2 LoA)</span></td><td><input type="text" id="l2Contact" placeholder="請輸入英文 (Please enter in English)"></td></tr>
+        <tr><td style="width:40%">EMV L1 Contact LoA</td><td><input type="text" id="l1Contact" placeholder="Please enter in English"></td></tr>
+        <tr><td>EMV L1 Contactless LoA</td><td><input type="text" id="l1Contactless" placeholder="Please enter in English"></td></tr>
+        <tr><td>EMV L2 Contact LoA</td><td><input type="text" id="l2Contact" placeholder="Please enter in English"></td></tr>
     </table>
 
-    <h3>🔹 各卡組織 非接觸 L3 <span class="hint">(Per-Scheme Contactless L3 LOA)</span></h3>
+    <h3>🔹 Per-Scheme Contactless L3 <span class="hint">(各卡組織 非接觸 L3)</span></h3>
     <table>
-        <tr><td style="width:40%"><span class="card-name">VISA</span> 非接觸 L3 LOA</td><td><input type="text" id="visaL3" placeholder="請輸入英文 (Please enter in English)"></td></tr>
-        <tr><td><span class="card-name">Mastercard</span> 非接觸 L3 LOA (C‑2 LoA)</td><td><input type="text" id="mcL3" placeholder="請輸入英文 (Please enter in English)"></td></tr>
-        <tr><td><span class="card-name">JCB</span> 非接觸 L3 LOA / TCI 編號</td><td><input type="text" id="jcbL3" placeholder="請輸入英文 (Please enter in English)"></td></tr>
-        <tr><td><span class="card-name">Discover</span> D-PAS 非接觸 L3 LOA</td><td><input type="text" id="discoverL3" placeholder="請輸入英文 (Please enter in English)"></td></tr>
-        <tr><td><span class="card-name">Amex</span> Expresspay 非接觸 L3 LOA (Level 2 版本)</td><td><input type="text" id="amexL3" placeholder="請輸入英文 (Please enter in English)"></td></tr>
-        <tr><td><span class="card-name">UPI</span> 非接觸 L3 LOA</td><td><input type="text" id="upiL3" placeholder="請輸入英文 (Please enter in English)"></td></tr>
+        <tr><td style="width:40%"><div class="logo-cell"><img src="images/Visa.png" alt="VISA" height="25" style="height:25px; width:auto;" onerror="this.style.display='none'"> VISA Contactless L3 LOA</div></td><td><input type="text" id="visaL3" placeholder="Please enter in English"></td></tr>
+        <tr><td><div class="logo-cell"><img src="images/Mastercard.png" alt="Mastercard" height="25" style="height:25px; width:auto;" onerror="this.style.display='none'"> Mastercard Contactless L3 LOA (C‑2 LoA)</div></td><td><input type="text" id="mcL3" placeholder="Please enter in English"></td></tr>
+        <tr><td><div class="logo-cell"><img src="images/JCB.png" alt="JCB" height="25" style="height:25px; width:auto;" onerror="this.style.display='none'"> JCB Contactless L3 LOA / TCI Ref</div></td><td><input type="text" id="jcbL3" placeholder="Please enter in English"></td></tr>
+        <tr><td><div class="logo-cell"><img src="images/Discover.png" alt="Discover" height="25" style="height:25px; width:auto;" onerror="this.style.display='none'"> Discover D-PAS Contactless L3 LOA</div></td><td><input type="text" id="discoverL3" placeholder="Please enter in English"></td></tr>
+        <tr><td><div class="logo-cell"><img src="images/Amex.png" alt="Amex" height="25" style="height:25px; width:auto;" onerror="this.style.display='none'"> Amex Expresspay Contactless L3 LOA (Level 2)</div></td><td><input type="text" id="amexL3" placeholder="Please enter in English"></td></tr>
+        <tr><td><div class="logo-cell"><img src="images/UPI.png" alt="UPI" height="25" style="height:25px; width:auto;" onerror="this.style.display='none'"> UPI Contactless L3 LOA</div></td><td><input type="text" id="upiL3" placeholder="Please enter in English"></td></tr>
     </table>
 
-    <!-- ========== 6. CVM & ODA 匯總 ========== -->
-    <h2>6. CVM & ODA 匯總 <span class="hint">(CVM & ODA Summary – applies to all schemes)</span></h2>
+    <!-- ========== 6. CVM & ODA Summary ========== -->
+    <h2>6. CVM & ODA Summary <span class="hint">(CVM & ODA 匯總)</span></h2>
     <table>
-        <tr><th>CVM 方式 (Method)</th><th>接觸式 (Contact)</th><th>非接觸 (Contactless)</th></tr>
+        <tr><th>CVM Method</th><th>Contact</th><th>Contactless</th></tr>
         <tr><td>Online PIN</td>
             <td><label class="inline-label"><input type="checkbox" id="onlinePinContactYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="onlinePinContactNo"> No</label></td>
             <td><label class="inline-label"><input type="checkbox" id="onlinePinCLessYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="onlinePinCLessNo"> No</label></td> </tr>
-        <tr><td>簽名 (Signature)</td>
+        <tr><td>Signature</td>
             <td><label class="inline-label"><input type="checkbox" id="sigContactYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="sigContactNo"> No</label></td>
             <td><label class="inline-label"><input type="checkbox" id="sigCLessYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="sigCLessNo"> No</label></td> </tr>
         <tr><td>No CVM</td>
             <td><label class="inline-label"><input type="checkbox" id="noCvmContactYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="noCvmContactNo"> No</label></td>
             <td><label class="inline-label"><input type="checkbox" id="noCvmCLessYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="noCvmCLessNo"> No</label></td> </tr>
-        <tr><td>CDCVM (設備驗證)</td>
+        <tr><td>CDCVM</td>
             <td><label class="inline-label"><input type="checkbox" id="cdcvmContactYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="cdcvmContactNo"> No</label></td>
             <td><label class="inline-label"><input type="checkbox" id="cdcvmCLessYes"> Yes</label> <label class="inline-label"><input type="checkbox" id="cdcvmCLessNo"> No</label></td> </tr>
     </table>
-    <p><strong>離線資料認證 (ODA) 支援：</strong>
+    <p><strong>Offline Data Authentication (ODA) supported:</strong>
         <label class="inline-label"><input type="checkbox" id="odaSda"> SDA</label>
         <label class="inline-label"><input type="checkbox" id="odaDda"> DDA</label>
         <label class="inline-label"><input type="checkbox" id="odaCda"> CDA</label>
-        <span class="hint">(如支援 CDA：</span><label class="inline-label"><input type="checkbox" id="cdaMode1"> Mode 1</label> <label class="inline-label"><input type="checkbox" id="cdaMode2"> Mode 2</label><span class="hint">)</span>
+        <span class="hint">(if CDA: </span><label class="inline-label"><input type="checkbox" id="cdaMode1"> Mode 1</label> <label class="inline-label"><input type="checkbox" id="cdaMode2"> Mode 2</label><span class="hint">)</span>
     </p>
 
-    <footer>EMV L3 認證問卷 – 純文字卡組織版本</footer>
+    <footer>EMV L3 Questionnaire – All card scheme logos fixed at 25px using your own images.</footer>
 </div>
 
 <script>
     (function() {
-        // ---------- 收集表單資料 ----------
+        // ---------- Collect form data ----------
         function getFormData() {
             let data = {};
 
@@ -219,7 +250,7 @@
             return data;
         }
 
-        // ---------- 填入表單資料 ----------
+        // ---------- Set form data ----------
         function setFormData(data) {
             if (!data) return;
             for (let [key, value] of Object.entries(data)) {
@@ -239,14 +270,14 @@
             }
         }
 
-        // ---------- 清空 ----------
+        // ---------- Clear ----------
         function clearForm() {
             document.querySelectorAll('input[type="text"]').forEach(input => input.value = '');
             document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-            alert('表單已清空 (Form cleared)');
+            alert('Form cleared');
         }
 
-        // ---------- 匯出 CSV ----------
+        // ---------- Export CSV ----------
         function exportToCSV() {
             const data = getFormData();
 
@@ -335,14 +366,14 @@
             URL.revokeObjectURL(url);
         }
 
-        // ---------- 匯入 CSV (支援有/無引號格式) ----------
+        // ---------- Import CSV ----------
         function importFromCSV(file) {
             const reader = new FileReader();
             reader.onload = function(e) {
                 const content = e.target.result;
                 const lines = content.split(/\r?\n/);
                 if (lines.length < 2) {
-                    alert("無效的 CSV 檔案 (Invalid CSV file)");
+                    alert("Invalid CSV file.");
                     return;
                 }
 
@@ -435,9 +466,9 @@
                 newData.interfaces = ifaceStr.split(/[;,]\s*/).filter(s => s);
 
                 setFormData(newData);
-                alert("CSV 匯入成功！(CSV imported successfully)");
+                alert("CSV imported successfully!");
             };
-            reader.onerror = function() { alert("讀取檔案失敗 (Error reading file)"); };
+            reader.onerror = function() { alert("Error reading file."); };
             reader.readAsText(file, "UTF-8");
         }
 
